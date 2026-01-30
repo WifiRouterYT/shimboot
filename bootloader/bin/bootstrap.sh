@@ -335,11 +335,11 @@ boot_chromeos() {
   local donor_files="/newroot/tmp/donor"
   mkdir -p $donor_mount
   mount -o ro $donor $donor_mount
-  echo "copying modules and firmware to tmpfs (this may take a while)"
-  copy_progress $donor_mount/lib/modules $donor_files/lib/modules
-  copy_progress $donor_mount/lib/firmware $donor_files/lib/firmware
-  mount -o bind $donor_files/lib/modules /newroot/lib/modules
-  mount -o bind $donor_files/lib/firmware /newroot/lib/firmware
+  echo "mounting modules and firmware to target"
+
+  mount -o bind,ro $donor_mount/lib/modules /newroot/lib/modules
+  mount -o bind,ro $donor_mount/lib/firmware /newroot/lib/firmware
+
   umount $donor_mount
   rm -rf $donor_mount
 
